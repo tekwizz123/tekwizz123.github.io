@@ -86,7 +86,7 @@ imm.createTable('Name', ['name of column one', 'name of column two', 'and so on'
 Creates a table with the name (in this case `Name`) and then adds the columns with their given names to the table.
 
 ```python
-table.add**(0 , ["column one's value", "column two's value", "etc"])
+table.add(0 , ["column one's value", "column two's value", "etc"])
 ```
 
 Pretty self explanatory, 0 is just the number (starting from 0) of the table, and then we add the given column values to that table as specified in the array passed as the second argument.
@@ -204,7 +204,7 @@ def main(args):
   else:
     imm.log("[*****]")
     imm.log("No bad characters found :) Your good to go!")
-    imm.log("[*****]")     
+    imm.log("[*****]")
   return "[*] !badchar finished, check Log window."
 ```
 
