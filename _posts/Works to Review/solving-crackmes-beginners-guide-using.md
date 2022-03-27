@@ -17,7 +17,7 @@ After looking around at a few crackme's I eventually found one that I thought wo
 
 ### Tools Used
 
-To solve this crackme, I originally used OllyDBG and BinaryNinja. That being said however, BinaryNinja is currently in beta and after testing it for a while I found I really don't like it's limitations, such as not being able to search for cross references to a string. Because of that, for this tutorial I will be using Hopper Disassembler. You can use the demo version or the paid version for this tutorial, though I will be using the paid version as I have a personal license. To download Hopper Disassembler, simply visit  as well if you want, which is available from [https://hopperapp.com/download.html](https://hopperapp.com/download.html).
+To solve this crackme, I originally used OllyDBG and BinaryNinja. That being said however, BinaryNinja is currently in beta and after testing it for a while I found I really don't like it's limitations, such as not being able to search for cross references to a string. Because of that, for this tutorial I will be using Hopper Disassembler. You can use the demo version or the paid version for this tutorial, though I will be using the paid version as I have a personal license. To download Hopper Disassembler, simply visit as well if you want, which is available from [https://hopperapp.com/download.html](https://hopperapp.com/download.html).
 
 Keep in mind the demo version of the application has a 30 minute limitation on sessions and you cannot save your session. This is similar to the free version of IDA Pro with the exception that with IDA Pro's free version does not limit the session's length. If you don't want to pay the £70 for the full version of Hopper and you want longer sessions, but don't mind not being able to save your work, then you can also do this in IDA Pro's free version.
 
@@ -84,7 +84,7 @@ Finally, if we look just after the second call to _grab\_input\_to\_buffer_, we 
 
 [![](https://1.bp.blogspot.com/-pWolnQzwx10/V1tPx4bgj-I/AAAAAAAAAog/V71h8_IE1-8G2WKeCgBxTRG94vcWXFR4ACK4B/s0/calculating%2Binfo%2Bafter%2Bstrlen%2Bcall.PNG) ](https://1.bp.blogspot.com/-pWolnQzwx10/V1tPx4bgj-I/AAAAAAAAAog/V71h8_IE1-8G2WKeCgBxTRG94vcWXFR4ACK4B/s0/calculating%2Binfo%2Bafter%2Bstrlen%2Bcall.PNG)
 
-First, the program loads the result of the strlen call from EAX into EDX at 0x00401676. We then go ahead and multiply EDX by 0x875cd, storing the result in EDX (the first parameter to IMUL is where to store the result, the second one is what to multiply 0x875cd by :)  ). Once that is done, we move 0x51eb851f to EAX, and then execute _mul edx_.
+First, the program loads the result of the strlen call from EAX into EDX at 0x00401676. We then go ahead and multiply EDX by 0x875cd, storing the result in EDX (the first parameter to IMUL is where to store the result, the second one is what to multiply 0x875cd by :) ). Once that is done, we move 0x51eb851f to EAX, and then execute _mul edx_.
 
 What is important to note at this point is that the _mul_ instruction multiplies EAX by the parameter provided and stores the result in EDX:EAX. That is, the higher 32 bits of the result are stored in EDX, whilst the lower 32 bits of the result are stored in EAX.
 

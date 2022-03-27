@@ -70,4 +70,4 @@ With all that being said, please do enjoy the paper :) I hope you manage to lear
 
 Download (full, uncensored version): [https://drive.google.com/file/d/0B5pT4hU\_yYUWLXVZVTlBa05La1E/view?usp=sharing](https://drive.google.com/file/d/0B5pT4hU_yYUWLXVZVTlBa05La1E/view?usp=sharing)
 
-Download (old censored version):  [https://drive.google.com/file/d/0B5pT4hU\_yYUWcUtsUWxxcFJjOVU/view?usp=sharing](https://drive.google.com/file/d/0B5pT4hU_yYUWcUtsUWxxcFJjOVU/view?usp=sharing)
+Download (old censored version): [https://drive.google.com/file/d/0B5pT4hU\_yYUWcUtsUWxxcFJjOVU/view?usp=sharing](https://drive.google.com/file/d/0B5pT4hU_yYUWcUtsUWxxcFJjOVU/view?usp=sharing)

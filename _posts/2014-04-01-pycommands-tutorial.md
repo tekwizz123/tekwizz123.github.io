@@ -55,14 +55,13 @@ from immlib import *
 
 def main(args):
   # Instantiate a immlib.Debugger instance of the current debugger process that is running right now.
-  imm = Debugger()
-
-  # Insert your commands to execute here.
-
-  # This command is not required, its only so that the command returns input to the user so that they      
+  imm = Debugger()
+  
+  # Insert your commands to execute here.
+  
+  # This command is not required, its only so that the command returns input to the user so that they
   # know that the script is done (this is displayed below the white box where you enter the commands)
-       
-  return "\[\*\] PyCommand Executed!"
+  return "\[\*\] PyCommand Executed!"
 ```
 
 
@@ -170,43 +169,43 @@ I claim no credit for this one, as its entirely the work of Justin Setiz from Gr
 from immlib import *
 
 def main(args):
-    imm = Debugger()
-    bad_char_found = False
+  imm = Debugger()
+  bad_char_found = False
 
-    # First argument is the address to begin our search
-    address = int(args[0],16)
+  # First argument is the address to begin our search
+  address = int(args[0],16)
 
-    # Shellcode to verify
-    shellcode = "<INSERT SHELLCODE HERE>"
-    shellcode_length = len(shellcode)
+  # Shellcode to verify
+  shellcode = "<INSERT SHELLCODE HERE>"
+  shellcode_length = len(shellcode)
 
-    debug_shellcode = imm.readMemory(address, shellcode_length)
-    debug_shellcode = debug_shellcode.encode("HEX") # We need to encode the debug_shellcode 
+  debug_shellcode = imm.readMemory(address, shellcode_length)
+  debug_shellcode = debug_shellcode.encode("HEX") # We need to encode the debug_shellcode 
                                                     # from assembly into hex format so that we can compare it to
-                                                    # the shellcode we inserted just above here.
+                                                    # the shellcode we inserted just above here.
 
-    imm.log("***************************************")
-    imm.log("Address: 0x%08x" % address)
-    imm.log("Shellcode Length: %d" % shellcode_length)
+  imm.log("***************************************")
+  imm.log("Address: 0x%08x" % address)
+  imm.log("Shellcode Length: %d" % shellcode_length)
 
-    # Begin a byte by byte comparison of the two shellcode buffers
-    count = 0
-    while count < shellcode_length:
-        if debug_shellcode[count] != shellcode[count]:
-            imm.log("Bad Char Detected at offset %d" % count)
-            bad_char_found = True
-            break
-        count += 1
-    if bad_char_found:
-        imm.log("[*****]")
-        imm.log("Bad char found %s" % debug_shellcode[count])
-        imm.log("Expected to find: %s" % shellcode[count])
-        imm.log("[*****]")
-    else:
-        imm.log("[*****]")
-        imm.log("No bad characters found :) Your good to go!")
-        imm.log("[*****]")        
-    return "[*] !badchar finished, check Log window."
+  # Begin a byte by byte comparison of the two shellcode buffers
+  count = 0
+  while count < shellcode_length:
+    if debug_shellcode[count] != shellcode[count]:
+      imm.log("Bad Char Detected at offset %d" % count)
+      bad_char_found = True
+      break
+    count += 1
+  if bad_char_found:
+    imm.log("[*****]")
+    imm.log("Bad char found %s" % debug_shellcode[count])
+    imm.log("Expected to find: %s" % shellcode[count])
+    imm.log("[*****]")
+  else:
+    imm.log("[*****]")
+    imm.log("No bad characters found :) Your good to go!")
+    imm.log("[*****]")     
+  return "[*] !badchar finished, check Log window."
 ```
 
 ## Defeat IsDebuggerPresent (for use against malware)
@@ -216,27 +215,27 @@ This is the only piece of code that is mine. The creator of this technique was D
 from immlib import *
 
 def main(args):
-    imm = Debugger()
+  imm = Debugger()
 
-    # This is the initial test to see what it was before:
-    result = imm.readMemory( imm.getPEBAddress() + 0x2, 1 )
+  # This is the initial test to see what it was before:
+  result = imm.readMemory( imm.getPEBAddress() + 0x2, 1 )
 
-    # At PEB + 0x2 in a process is the BeingDebugged variable which is what
-    # the function IsBeingDebugged returns. If we set this to 0 then
-    # IsBeingDebugged is tricked into thinking that the process is not being
-    # debugged because hey, thats what the process is reporting right?
-    # And thats one of many ways to get around anti-debugging techniques.
-    result = result.encode("HEX")
-    imm.log("Before the change: %s" % result)
+  # At PEB + 0x2 in a process is the BeingDebugged variable which is what
+  # the function IsBeingDebugged returns. If we set this to 0 then
+  # IsBeingDebugged is tricked into thinking that the process is not being
+  # debugged because hey, thats what the process is reporting right?
+  # And thats one of many ways to get around anti-debugging techniques.
+  result = result.encode("HEX")
+  imm.log("Before the change: %s" % result)
 
-    # Make the change
-    imm.writeMemory( imm.getPEBAddress() + 0x2, "\\x00" )
+  # Make the change
+  imm.writeMemory( imm.getPEBAddress() + 0x2, "\\x00" )
 
-    # And print the new results
-    result = imm.readMemory( imm.getPEBAddress() + 0x2, 1 )
-    result = result.encode("HEX")
-    imm.log("Result after change: %s" % result)
-    return "!defeatDebuggerPresent is done."
+  # And print the new results
+  result = imm.readMemory( imm.getPEBAddress() + 0x2, 1 )
+  result = result.encode("HEX")
+  imm.log("Result after change: %s" % result)
+  return "!defeatDebuggerPresent is done."
 ```
 
 ## findantidep.py
