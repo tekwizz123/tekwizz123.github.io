@@ -1,31 +1,29 @@
 ---
-title: 'OSCE Lessons'
-date: 2014-08-05T13:52:00.001-07:00
-draft: false
-url: /2014/08/osce-lessons.html
+layout: post
+title: OSCE Lessons
+#subtitle: 
+#cover-img: /assets/img/bsides-london.jpg
+#thumbnail-img: /assets/img/thumb.png
+#share-img: /assets/img/path.jpg
+tags: [OSCE, Lessons]
 ---
-
-Lessons Learned from OSCE
--------------------------
-
-
 
 ### Lesson 1: Things are Never What They Initially Appear to Be
 
 Ouch. This one was a very tough lesson to learn, but it taught me a lot. A lot of things in the CTP exam appear to be easy or very hard or contain steps that make sense at first, but when you actually get down to them, they are either easier than you thought they were, or, more often, they take more jiggling than what was initially covered on the course.
 
-A prime example of this was the NNM exploit. This one was a pain in the fing ass for lack of better words to describe it. For a good solid 3 weeks this thing proceeded to get me close to where I wanted (I'm being deliberately vague here to avoid tripping on to spoilers where Offsec might get offended), but it just wasn't quite there. Turns out in the end the exploit wasn't what I had initally envisioned it to be and I had to adjust my expectations and assumptions to get it correctly working again.
+A prime example of this was the NNM exploit. This one was a pain in the ass for lack of better wording. For a good solid 3 weeks this thing proceeded to get me close to where I wanted (I'm being deliberately vague here to avoid tripping on to spoilers where Offsec might get offended), but it just wasn't quite there. Turns out in the end the exploit wasn't what I had initially envisioned it to be and I had to adjust my expectations and assumptions to get it correctly working again.
 
 A simple change, but it drives a point home. Don't assume that something is easy or hard just cause someone else tells you it is. Take their advice into consideration for sure, but you won't know until YOU do it.
 
 
 ### Lesson 2: Never Give Up
 
-Woot, I've hit the first cheesy line of this entire thing. But its actually one of the most important on this list. There were many times in the exam (which as of writing, I still haven't passed) and the CTP coursework itself where I just felt like giving up. A few times I even decided to take the a few hours off cause of the rage that was enduced from continuously banging my head against the problem.
+Woot, I've hit the first cheesy line of this entire thing. But its actually one of the most important on this list. There were many times in the exam (which as of writing, I still haven't passed) and the CTP coursework itself where I just felt like giving up. A few times I even decided to take the a few hours off cause of the rage that was induced from continuously banging my head against the problem.
 
 However one has to learn to continue on if you want to succeed. I still haven't managed to perfect this skill but OSCE has taught me that I need to really get a grip on this so as to prevent myself from wasting additional time. There were a few times in the exam where I took too long of a break cause I thought I wanted to just stop working.
 
-I never wanted to plainly give up though, which is what kept me going in the end, but there were definitely a few moments where I just wanted to hit the sack and call it a day. Finding a motive that you want to achieve or a next small step will help you get over the ruts that occur when you just can't seem to get anywhere and you just want to throw the towl in.
+I never wanted to plainly give up though, which is what kept me going in the end, but there were definitely a few moments where I just wanted to hit the sack and call it a day. Finding a motive that you want to achieve or a next small step will help you get over the ruts that occur when you just can't seem to get anywhere and you just want to throw the towel in.
 
 
 ### Lesson 3: Time Management
@@ -50,7 +48,7 @@ If you can I would suggest trying to build a lab and get some practice under you
 
 In other words, think outside the box. Some of the best learning is done when you really stretch your mind to think of different possibilities that are outside of what you would consider normal. This kind of thinking also allows you to bypass assumptions that might have been put in place by developers or manufacturers and is a good skill to have in general as it allows you to flexibly adapt to different situations and craft solutions to them on the fly.
 
-To give an example, say you have a file that your trying to hide from an antivirus. You could pack the file, but then the packer's signature might get detected. Whats another way you could get around it? Well you could try encrypt the packer's signature to get around the antivirus detection, but what obfuscating the file? Or how about encrypting only the sections that get detected? What if you don't include the payload in the file at all and instead download it from a remote source? What if you add in delays to the file's execution to hinder heriustics? What if you add delays and then split the program up into child processes that then report to one child process that kills the other children once it is done?
+To give an example, say you have a file that your trying to hide from an antivirus. You could pack the file, but then the packer's signature might get detected. Whats another way you could get around it? Well you could try encrypt the packer's signature to get around the antivirus detection, but what obfuscating the file? Or how about encrypting only the sections that get detected? What if you don't include the payload in the file at all and instead download it from a remote source? What if you add in delays to the file's execution to hinder heuristics? What if you add delays and then split the program up into child processes that then report to one child process that kills the other children once it is done?
 
 Theres a lot of different ways to get to the answer. Depending on your situation you may need to be more or less creative and put in more or less effort, but there is almost always a way to get to the solution. You just have to be patient and willing to get the job done ;)
 
@@ -69,5 +67,3 @@ You might also find them helpful to have around when you simply want to bounce s
 Hope that helped some people learn from some of the mistakes that I've had in the CTP course, even if they seem obvious or silly. There all my honest mistakes that I've made in the recent past so none of these are ones I've made up for demonstrations sake.
 
 Let me know what you think of these, if you think there is anything else to add, or if I should start a list of tips and tricks from various mistakes people have made (could be a fun community list :) )
-
-\-tekwizz123
