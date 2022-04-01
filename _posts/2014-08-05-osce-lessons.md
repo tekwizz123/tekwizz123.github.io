@@ -54,7 +54,6 @@ You ideally should have a group of friends that come from different backgrounds.
 You might also find them helpful to have around when you simply want to bounce some ideas off of someone and explain your logic out loud to them, which can help you realize your errors when you have to explain them to someone else.
 
 # Conclusion
-
 Hope that helped some people learn from some of the mistakes that I've had in the CTP course, even if they seem obvious or silly. There all my honest mistakes that I've made in the recent past so none of these are ones I've made up for demonstrations sake.
 
 Let me know what you think of these, if you think there is anything else to add, or if I should start a list of tips and tricks from various mistakes people have made (could be a fun community list :) )
