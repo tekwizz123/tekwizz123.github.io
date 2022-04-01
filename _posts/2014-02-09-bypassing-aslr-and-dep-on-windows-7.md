@@ -8,10 +8,10 @@ title: 'Bypassing ASLR and DEP on Windows 7: The Audio Converter Case'
 tags: [ASLR, DEP, Mona.py]
 ---
 
-### Intro
+# Intro
 The exploit we will be working on is the Audio Converter 8.1 SEH buffer overflow from sud0, as detailed here: [https://www.exploit-db.com/exploits/13763/](https://www.exploit-db.com/exploits/13763/). We will need the following tools to develop this exploit:
 
-### Required Tools
+## Required Tools
 
 *   Fully patched Windows 7 32 bit (I haven't done 64 bit exploitation, however you are welcome to try it out if you feel capable ;) )
 *   Immunity Debugger
@@ -20,7 +20,7 @@ The exploit we will be working on is the Audio Converter 8.1 SEH buffer overflow
 *   Audio Converter from [https://www.exploit-db.com/wp-content/themes/exploit/applications/75f68aaa2ed2bdc458b2114f4ee302ae-audc81d.exe](https://www.exploit-db.com/wp-content/themes/exploit/applications/75f68aaa2ed2bdc458b2114f4ee302ae-audc81d.exe)
 *   Some form of a text editor
 
-### Switching DEP On By Default
+## Switching DEP On By Default
 
 By default Windows 7 comes with OptIn DEP. This would essentially mean that when we exploit the program, the only protection it would have is ASLR. But hey, that would be boring right? I mean come on, only one protection? Nah, lets change this:
 
@@ -36,8 +36,8 @@ Under Performance click Settings, then navigate to the Data Execution Prevention
 
 Ok all good? Lets get started!
 
-
-### Baby steps Scotty....baby steps
+# Exploitation
+## Baby steps Scotty....baby steps
 
 So to start off, we need to figure out how to trigger the vulnerability. So lets start off with a very basic exploit structure. We'll use the following for the exploit:
 
@@ -66,7 +66,7 @@ Next, click cancel on the popup menu that appears and then click on File -> Add 
 
 The program will now hit an access violation. Click on View -> SEH Chain. You should now see that we have overwritten the SEH handler, as seen above.
 
-### Finding The Offsets
+## Finding The Offsets
 Ok, so now we know that the target is vulnerable to a SEH overwrite. So lets see if we cant find the offsets. Well we have mona.py installed, so why don't we generate a quick metasploit pattern to figure the offsets?
 
 [![](https://1.bp.blogspot.com/-HNw9RpAQ3D8/Uvdx-IvAxyI/AAAAAAAAANw/g2m0gye3hNE/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_016.png)](https://1.bp.blogspot.com/-HNw9RpAQ3D8/Uvdx-IvAxyI/AAAAAAAAANw/g2m0gye3hNE/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_016.png)
@@ -118,8 +118,7 @@ If we run this python script and load the resulting .pls file into the program w
 
 Nice, so now we can control the SEH chain.
 
-### Stack Pivoting - The Beginning of Our ROP Journey
-
+## Stack Pivoting - The Beginning of Our ROP Journey
 Ok so now that we have control over SEH, we want to see how much we are away from the beginning of our payload on the stack. We then need to do a stack pivot (aka a stack adjustment) in order to change the top of the stack to point to our payload.
 
 To start off with, lets replace the SEH overwrite with an address from the DLL. We know this because the main executable and the DLL are both not compiled with any protection (SafeSEH is enabled on the main executable, but we won't be using it for this exploit so its not a problem for us). You can verify this by doing `!mona modules`.
@@ -216,8 +215,7 @@ If we then execute this without any breakpoints, the program should execute our 
 
 Ok, so this is all good. Now what we need to do is form a ROP chain. Remember mona.py from earlier? Well your going to love him right about now :)
 
-### ROP'ing to Success with mona.py
-
+## ROP'ing to Success with mona.py
 At this point what we could do is create our own ROP chain using any of the techniques from Corelan's tutorial over at [https://www.corelan.be/index.php/2010/06/16/exploit-writing-tutorial-part-10-chaining-dep-with-rop-the-rubikstm-cube/](https://www.corelan.be/index.php/2010/06/16/exploit-writing-tutorial-part-10-chaining-dep-with-rop-the-rubikstm-cube/) however we have a much simpler tool: mona.py!
 
 To find ROP chains that we can use, all we need to do is `!mona rop`.

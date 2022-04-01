@@ -102,7 +102,7 @@ The part after this is a bit more confusing. The line `s_blocksize_string("data"
 
 Finally, after declaring all of the parts of the packet that we will send line by line, we then receive the banner response from the server, as Kolibri will send a banner to anyone who connects to its server port, and we would like to retrieve this if possible. Following this, we sleep for 5 seconds to allow the server to properly handle our requests and not get overwhelmed. For some reason Kolibri is not very good at handling multiple requests simultaneously, thus the long wait period. You can tune this down to about 3 seconds if you want to speed things up, but any shorter might cause problems.
 
-### Fuzzing the Server
+## Fuzzing the Server
 
 At this point we now need to fuzz the server and observe any crashes that occur. Save the script I mentioned above as `post.spk` on your Kali machine:
 
@@ -163,7 +163,8 @@ Variablesize= 2050
 Reading packet
 ```
 
-### Creating the POC
+# Creating the POC
+## Initial Attempts
 
 So lets make a PoC that sends 2050 A's in the right part of the POST request. Opening up our `post.spk` file, we can see this corresponds to the first `string_variable` line:
 
@@ -236,7 +237,7 @@ If we send this to the target and then observe the SEH chain afterwards, we can 
 
 [![](https://3.bp.blogspot.com/-NwD8kIvoSHI/VDQ_JO9hH7I/AAAAAAAAAXc/KOUpARo3tSE/s0/Windows%2B7%2BProfessional%2B-%2BVMware%2BPlayer%2B(Non-commercial%2Buse%2Bonly)_009.png)](https://3.bp.blogspot.com/-NwD8kIvoSHI/VDQ_JO9hH7I/AAAAAAAAAXc/KOUpARo3tSE/s0/Windows%2B7%2BProfessional%2B-%2BVMware%2BPlayer%2B(Non-commercial%2Buse%2Bonly)_009.png)
 
-### A Problem Appears
+## A Problem Appears
 
 At this point we run into a small problem. When looking at the available modules in mona to find what ones are not SafeSEH enabled, we see that only the application itself is not SafeSEH enabled:
 
@@ -275,6 +276,8 @@ And as you can see, the request is terminated with a `\x00` byte, resulting in t
 [![](https://2.bp.blogspot.com/-jnQ7_L6NBXQ/VEGdESAKesI/AAAAAAAAAbc/M0M6O02ffXI/s0/Windows%2B7%2BProfessional%2B-%2BVMware%2BPlayer%2B(Non-commercial%2Buse%2Bonly)_059.png)](https://2.bp.blogspot.com/-jnQ7_L6NBXQ/VEGdESAKesI/AAAAAAAAAbc/M0M6O02ffXI/s0/Windows%2B7%2BProfessional%2B-%2BVMware%2BPlayer%2B(Non-commercial%2Buse%2Bonly)_059.png)
 
 The next part comes in bypassing ASLR on Windows, which is the first of several protections we will need to bypass to get around EMET (which will be discussed in a separate blog post).
+
+## Fixing the Problem
 
 From the earlier post where we examined that SafeSEH is not enabled for the application binary itself, we can also notice that the application binary itself is the only one not subject to DEP, ASLR, or pretty much any protections at all. As thus, if we can find an address within this binary that holds a `POP POP RETN` instruction, we can use this in combination with the fact that our requests are now terminated with a null byte (the first byte of the binary's addresses start with a `\x00` so we need to use this trick to be able to use addresses from the binary itself) to create a ASLR friendly SEH overwrite.
 
@@ -409,7 +412,7 @@ Connecting to this port returns a shell:
 [![](https://3.bp.blogspot.com/-VBJAhNqMxUk/VEGwkBau-cI/AAAAAAAAAds/vZIlUH2QpLU/s0/Kali%2BLinux%2B1.0.6%2B32%2Bbit%2B-%2BVMware%2BPlayer%2B(Non-commercial%2Buse%2Bonly)_080.png)](https://3.bp.blogspot.com/-VBJAhNqMxUk/VEGwkBau-cI/AAAAAAAAAds/vZIlUH2QpLU/s0/Kali%2BLinux%2B1.0.6%2B32%2Bbit%2B-%2BVMware%2BPlayer%2B(Non-commercial%2Buse%2Bonly)_080.png)
 
 
-### Conclusion
+# Conclusion
 
 Hopefully this was a good tutorial on how to find your own vulnerabilities and turn them into an exploit. I always wanted to do something like this as soon as I found my first proper vulnerability so here you go :)
 
