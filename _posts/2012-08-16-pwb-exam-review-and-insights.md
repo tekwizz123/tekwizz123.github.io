@@ -1,15 +1,18 @@
 ---
+layout: post
 title: 'PWB Exam Review and Insights'
-date: 2012-08-16T09:00:00.000-07:00
-draft: false
-url: /2012/08/pwb-exam-review-and-insights.html
+#subtitle: 
+#cover-img: /assets/img/bsides-london.jpg
+#thumbnail-img: /assets/img/thumb.png
+#share-img: /assets/img/path.jpg
+tags: [PWB]
 ---
 
-Okay I guess a blog post has been looong overdue by this point. Looking back I see the last post I made was a month ago. Let me explain what happened between now and then:
+Okay I guess a blog post has been long overdue by this point. Looking back I see the last post I made was a month ago. Let me explain what happened between now and then.
 
 Ok basically after I got stuck in that two week rut, I come to realize that I should ask for help. So basically what happens is that I end up asking people for help, and in exchange I help them out with their problems on #offsec. This actually works quite well, as I end up reinforcing the information that I already learned while learning what I am doing wrong with new ones.
 
-Unfortunetly I have a bit of a problem after that. I got into another 4-5 hosts but I realize I need to do better. Too bad then, because right in the middle of all of this, I have another vacation for a week. To be honest, in retrospect I think I needed that vacation because when I came back from learning how to scuba dive on said vacation, my mind was so much more refreshed and focused.
+Unfortunately I have a bit of a problem after that. I got into another 4-5 hosts but I realize I need to do better. Too bad then, because right in the middle of all of this, I have another vacation for a week. To be honest, in retrospect I think I needed that vacation because when I came back from learning how to scuba dive on said vacation, my mind was so much more refreshed and focused.
 
 Anyway, that aside I come back from the vacation and I realize I only have like 3 days left. This then turns into a mad rush as I focus on getting as many last hosts as I can and ask people for help, giving what I can in return. I realize that many of these hosts were not that hard, and that I had just been approaching it from the wrong angle (ex performing brute force on the wrong service or overlooking a simple detail that I underestimated the importance of).
 
@@ -34,7 +37,7 @@ EVER.
 
 So after i'm done jumping around the room like a crazed ape, I decide to download a few challenges. Some them I did before, but I thought it would be good to do them again. So I went through Kioptrix 1, then Kioptrix 2, Kioptrix 3 and then WackoPiko. WackoPiko was tbh interesting. I got a web shell in a few minutes (easy one to do tbh) but I got stuck escalating to root. I kept getting mmap not allowed errors.
 
- All of a sudden I hit on one that works. For some reason, the mmap from this one was allowed and I get my root shell :) w00tw00t! I kid you not, that gave me the most immense high of the entire course. And it wasn't even one of their machines :P Idk why, but it just did. The feeling of defeating what looks to be a brick wall is one that never gets old.
+All of a sudden I hit on one that works. For some reason, the mmap from this one was allowed and I get my root shell :) w00tw00t! I kid you not, that gave me the most immense high of the entire course. And it wasn't even one of their machines :P Idk why, but it just did. The feeling of defeating what looks to be a brick wall is one that never gets old.
 
 Anyway Tuesday rolls around and I wake up and start my day normally. At about 12 pm I check my email and this is pretty much what happens:
 
@@ -61,7 +64,7 @@ I then read over the lab guide while waiting for the scans to run. Looking it ov
 
 I test the exploit. I realize it doesn't quite work yet. Modify the exploit
 
-\* 5 1/2 hours later\*
+\*5 1/2 hours later\*
 
 I get a system shell on the first host and gather the information I need to prove I hacked it.
 
@@ -73,7 +76,7 @@ The same goes for the other one.
 
 The last one I manage to get a shell on the system, but I am unable to root it. In the last hour I attempt to crack the SSH login for one of the users, but of course the time runs out. And when I mean runs out I mean at 24 hours they literally cut you off and force you out. No oh...you can get 10 more minutes. When they say 24 they mean 24. No more, no less.
 
-In the end I end up getting 4 systems down and 1 partially compromized, scoring more than enough points to potentially pass. I crash into bed, which actually turns out to be a rather sleepless night, as I keep tossing and turning. Not that im scared about anything tbh, but my body is still on the "We are Tron. We do not stop. We do not falter. Continuing the hack....w00tw00t found....shell time mode..." kind of mode.
+In the end I end up getting 4 systems down and 1 partially compromised, scoring more than enough points to potentially pass. I crash into bed, which actually turns out to be a rather sleepless night, as I keep tossing and turning. Not that im scared about anything tbh, but my body is still on the "We are Tron. We do not stop. We do not falter. Continuing the hack....w00tw00t found....shell time mode..." kind of mode.
 
 Anyway next day I wake up, and I just generally fool around with some British comedy for the next hour or so. Eventually I get my mind focused and get down to it. It ends up taking a hell of a lot longer than I thought. I must have gone from about 10 am to about 9 pm. No joke. Then again I was on Skype and IRC some of the time so that's probably why. But still, I feel ashamed. So 9 pm roars its messed up son of a gun face and I find out via IRC that I need to add in the exploit details for each exploit. Ok no problem. So I go and get that done. Wait....what about the URL for each and every exploit? Oh god...
 
@@ -87,7 +90,7 @@ Ok np. Lets compress this baby.....or not? I find it only goes down 1 MB after I
 
 \* One hasty convo with connection later....\*
 
-I find out I really aught to do it in PDF. But PDF is 16 MB....meh i'll try the other method.
+I find out I really aught to do it in PDF. But PDF is 16 MB....meh I'll try the other method.
 
 So I take my .ODT file and try and split that into multiple files.....
 
@@ -109,9 +112,9 @@ I get tired of waiting and PM rAWjAW again.
 
 "We will check now, give us a sec"
 
-By this point im so tired im not thinking straight.
+By this point I'm so tired I'm not thinking straight.
 
-"Yep we got it, should recieve an email soon"
+"Yep we got it, should receive an email soon"
 
 And what do I do? Look at soon, think oh....lets wait some more.
 
@@ -126,18 +129,4 @@ Yep its there.
 I shut everything down for the night and head to bed.
 
 
-And now here we are the day after all of this, and I have to wait around 3 days for the results to come back. Should be good :)
-
-So thats my entire journey put to an end.
-
-If you liked this, +1
-
-If not, tell me why.
-
-If neither of these, I guess you didn't read it.
-
-That or your just completely neutral and never have an opinion :P
-
-Anyway its 12 am here. Time to head to bed.
-
-\-tekwizz123
+And now here we are the day after all of this, and I have to wait around 3 days for the results to come back. Should be good :) So thats my entire journey put to an end.
