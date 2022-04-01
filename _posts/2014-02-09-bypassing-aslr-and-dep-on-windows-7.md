@@ -1,29 +1,24 @@
 ---
+layout: post
 title: 'Bypassing ASLR and DEP on Windows 7: The Audio Converter Case'
-date: 2014-02-09T10:15:00.000-08:00
-draft: false
-url: /2014/02/bypassing-aslr-and-dep-on-windows-7.html
+#subtitle: 
+#cover-img: /assets/img/bsides-london.jpg
+#thumbnail-img: /assets/img/thumb.png
+#share-img: /assets/img/path.jpg
+tags: [ASLR, DEP, Mona.py]
 ---
 
-
-
 ### Intro
-
-Just before we start, a little shoutout to https://formatmysourcecode.blogspot.co.uk/ for making all the exploit code look neat n tidy in this post :)
-
 The exploit we will be working on is the Audio Converter 8.1 SEH buffer overflow from sud0, as detailed here: [https://www.exploit-db.com/exploits/13763/](https://www.exploit-db.com/exploits/13763/). We will need the following tools to develop this exploit:
-
 
 ### Required Tools
 
 *   Fully patched Windows 7 32 bit (I haven't done 64 bit exploitation, however you are welcome to try it out if you feel capable ;) )
 *   Immunity Debugger
 *   Python 2.7
-*   Installed mona.py addon for Immunity Debugger from the ever awesome corelanc0d3r and his Corelan Team.
-*   Installed Audio Converter from [https://www.exploit-db.com/wp-content/themes/exploit/applications/75f68aaa2ed2bdc458b2114f4ee302ae-audc81d.exe](https://www.exploit-db.com/wp-content/themes/exploit/applications/75f68aaa2ed2bdc458b2114f4ee302ae-audc81d.exe)
+*   mona.py addon for Immunity Debugger from the ever awesome corelanc0d3r and his Corelan Team.
+*   Audio Converter from [https://www.exploit-db.com/wp-content/themes/exploit/applications/75f68aaa2ed2bdc458b2114f4ee302ae-audc81d.exe](https://www.exploit-db.com/wp-content/themes/exploit/applications/75f68aaa2ed2bdc458b2114f4ee302ae-audc81d.exe)
 *   Some form of a text editor
-
-
 
 ### Switching DEP On By Default
 
@@ -31,15 +26,11 @@ By default Windows 7 comes with OptIn DEP. This would essentially mean that when
 
 Click on Start in Windows, then right click on Computer and click properties you should see the following menu:
 
-
 [![](https://2.bp.blogspot.com/-rBhrqkyxW6Y/Uvdv2zLZCZI/AAAAAAAAANc/p1BXlbGDvIw/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_013.png)](https://2.bp.blogspot.com/-rBhrqkyxW6Y/Uvdv2zLZCZI/AAAAAAAAANc/p1BXlbGDvIw/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_013.png)
-
 
 Click Advanced System Settings then click the Advanced tab:
 
-
 [![](https://1.bp.blogspot.com/-2IWQgMQp8jk/Uvdwagf8GCI/AAAAAAAAANk/dbw7-B1nskA/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_015.png)](https://1.bp.blogspot.com/-2IWQgMQp8jk/Uvdwagf8GCI/AAAAAAAAANk/dbw7-B1nskA/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_015.png)
-
 
 Under Performance click Settings, then navigate to the Data Execution Prevention tab and click the option "Turn on DEP for all programs and services". You will have to restart your computer for the effects to take place.
 
@@ -59,40 +50,28 @@ buffer = junk
 handle = open("audioExploitDemo.pls", "w")
 handle.write(buffer)
 handle.close()
-
 ```
-We'll save this file as audioExploitDEPDemo.py. Run this python file and then run the resulting file as follows:
 
+We'll save this file as audioExploitDEPDemo.py. Run this python file and then run the resulting file as follows:
 
 [![](https://3.bp.blogspot.com/-G8p4k06bSp0/Uvds1jVeClI/AAAAAAAAANA/v1BzxGdfKGk/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_010.png)](https://3.bp.blogspot.com/-G8p4k06bSp0/Uvds1jVeClI/AAAAAAAAANA/v1BzxGdfKGk/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_010.png)
 
-
 Find the the audconv.exe executable within the Audio Converter file in Program Files and open it in Immunity Debugger.
-
 
 [![](https://2.bp.blogspot.com/-RlrTNqhPDzE/Uvds5bwU5dI/AAAAAAAAANI/j_J36NQ-4v8/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_011.png)](https://2.bp.blogspot.com/-RlrTNqhPDzE/Uvds5bwU5dI/AAAAAAAAANI/j_J36NQ-4v8/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_011.png)
 
-
 Next, click cancel on the popup menu that appears and then click on File -> Add Playlist.
-
 
 [![](https://4.bp.blogspot.com/-rH917PlDz0g/Uvds7OI2DAI/AAAAAAAAANQ/vGLiLOJThhg/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_012.png)](https://4.bp.blogspot.com/-rH917PlDz0g/Uvds7OI2DAI/AAAAAAAAANQ/vGLiLOJThhg/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_012.png)
 
-
 The program will now hit an access violation. Click on View -> SEH Chain. You should now see that we have overwritten the SEH handler, as seen above.
 
-
 ### Finding The Offsets
-
 Ok, so now we know that the target is vulnerable to a SEH overwrite. So lets see if we cant find the offsets. Well we have mona.py installed, so why don't we generate a quick metasploit pattern to figure the offsets?
-
 
 [![](https://1.bp.blogspot.com/-HNw9RpAQ3D8/Uvdx-IvAxyI/AAAAAAAAANw/g2m0gye3hNE/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_016.png)](https://1.bp.blogspot.com/-HNw9RpAQ3D8/Uvdx-IvAxyI/AAAAAAAAANw/g2m0gye3hNE/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_016.png)
 
-
-To view the pattern.txt file navigate to:
-
-> C:\\Users\\\*your username here\*\\AppData\\Local\\VirtualStore\\Program Files\\Immunity Inc\\Immunity Debugger
+To view the pattern.txt file navigate to `C:\Users\*your username here*\AppData\Local\VirtualStore\Program Files\Immunity Inc\Immunity Debugger`.
 
 Copy the info over there into our exploit:
 
@@ -104,25 +83,17 @@ buffer = junk
 handle = open("audioExploitDemo.pls", "w")
 handle.write(buffer)
 handle.close()
-
 ```
-Ok I'm going to assume you know to reload the file by now. So lets restart the program, run our Python script and load the new .pls file that is created. The program crashes again. Lets see the SEH chain. The second entry is the SEH handler:
 
+Ok I'm going to assume you know to reload the file by now. So lets restart the program, run our Python script and load the new .pls file that is created. The program crashes again. Lets see the SEH chain. The second entry is the SEH handler:
 
 [![](https://3.bp.blogspot.com/-vdhtme0VHsI/Uvd2E8gAwXI/AAAAAAAAAN8/TY4pIsZQk8Y/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_018.png)](https://3.bp.blogspot.com/-vdhtme0VHsI/Uvd2E8gAwXI/AAAAAAAAAN8/TY4pIsZQk8Y/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_018.png)
 
-
 Ok so the NSEH handler is overwritten with 39724638 (remember this number may be different for you, this is just what I get on my machine so find this for your machine).
 
-We can then find the offset by running:
-
-> !mona pattern\_offset 39724638
-
-The result is shown below:
-
+We can then find the offset by running `!mona pattern_offset 39724638`. The result is shown below:
 
 [![](https://4.bp.blogspot.com/-22CA5xNvYVU/Uvd2E7brbjI/AAAAAAAAAOA/nR0RTHXecEE/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_019.png)](https://4.bp.blogspot.com/-22CA5xNvYVU/Uvd2E7brbjI/AAAAAAAAAOA/nR0RTHXecEE/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_019.png)
-
 
 We can see that it found our offset 4436 bytes in where we overwrote the NSEH handler. Lets change the exploit code to reflect this. Remember that we overwrite the NSEH first then the SEH handler in a SEH exploit, so lets change this slightly to reflect this.
 
@@ -141,23 +112,17 @@ handle.close()
 
 If we run this python script and load the resulting .pls file into the program we get the following in the SEH chain view:
 
-
 [![](https://4.bp.blogspot.com/-OQpD779Tqqs/UveAkCBbNtI/AAAAAAAAAOc/w5-HiAXRN6g/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_020.png)](https://4.bp.blogspot.com/-OQpD779Tqqs/UveAkCBbNtI/AAAAAAAAAOc/w5-HiAXRN6g/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_020.png)
 
-[
-](https://3.bp.blogspot.com/-8e2FbBeiCNk/UveAVam2bhI/AAAAAAAAAOU/phmwFhWVjm4/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_019.png)
+[](https://3.bp.blogspot.com/-8e2FbBeiCNk/UveAVam2bhI/AAAAAAAAAOU/phmwFhWVjm4/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_019.png)
 
 Nice, so now we can control the SEH chain.
-
-
 
 ### Stack Pivoting - The Beginning of Our ROP Journey
 
 Ok so now that we have control over SEH, we want to see how much we are away from the beginning of our payload on the stack. We then need to do a stack pivot (aka a stack adjustment) in order to change the top of the stack to point to our payload.
 
-To start off with, lets replace the SEH overwrite with an address from the DLL. We know this because the main executable and the DLL are both not compiled with any protection (SafeSEH is enabled on the main executable, but we won't be using it for this exploit so its not a problem for us). You can verify this by doing:
-
->  !mona modules
+To start off with, lets replace the SEH overwrite with an address from the DLL. We know this because the main executable and the DLL are both not compiled with any protection (SafeSEH is enabled on the main executable, but we won't be using it for this exploit so its not a problem for us). You can verify this by doing `!mona modules`.
 
 Any address from the audconv.dll file will work though, I just chose a random one from within the DLL. Our new exploit should look like this:
 
@@ -176,17 +141,13 @@ handle.close()
 
 Note that we are using little endigan here so the address is actually 0x1004C7A6 in my example. Using the new resulting file, we set a breakpoint on this address and run the program, which gives us the following:
 
-
 [![](https://4.bp.blogspot.com/-X_HpiAJwAws/UveUulVckpI/AAAAAAAAAOw/bs5kAFnECuo/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_021.png)](https://4.bp.blogspot.com/-X_HpiAJwAws/UveUulVckpI/AAAAAAAAAOw/bs5kAFnECuo/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_021.png)
-
 
 If we double click on the current stack address in the lower right pannel, we can see the offset that we need to adjust the stack by to get it to point to the start of our payload.
 
 This can be seen in the screenshot below:
 
-
 [![](https://3.bp.blogspot.com/-jKi9WcvKHG4/UveUumIT14I/AAAAAAAAAOs/Y6SOMM9GQQA/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_022.png)](https://3.bp.blogspot.com/-jKi9WcvKHG4/UveUumIT14I/AAAAAAAAAOs/Y6SOMM9GQQA/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_022.png)
-
 
 So it looks like we will need to adjust the stack 0x8E0 bytes to get it to point to the beginning of our buffer. However since we are using ROP, we will be reusing the program's code. As thus we have to get the adjustment as close to 0x8E0 bytes as we can, but it won't be exact.
 
@@ -208,10 +169,7 @@ RETN
 
 And click search. This will search all modules for all sets of instructions where some constant number is added to ESP and there is a RETN instruction following it. Remember that we are looking for a number above or equal to 0x8E0 but that is still fairly close to that number in audoconv.dll. The best one we can use that doesn't contain null bytes appears to be located at 0x1001A762:
 
-
 [![](https://4.bp.blogspot.com/-QxLLg22aK0o/Uveg7LxYlsI/AAAAAAAAAPE/MhBBRzp_l8Y/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_023.png)](https://4.bp.blogspot.com/-QxLLg22aK0o/Uveg7LxYlsI/AAAAAAAAAPE/MhBBRzp_l8Y/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_023.png)
-
-
 
 We'll use this address for the exploit, which now becomes:
 
@@ -230,15 +188,11 @@ handle.close()
 
 Setting a breakpoint on this address and running the program with the new file gives us this:
 
-
 [![](https://4.bp.blogspot.com/-8rOfpM1admw/Uveu3-EFHaI/AAAAAAAAAPU/Xnaa3Jrs9Nw/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_024.png)](https://4.bp.blogspot.com/-8rOfpM1admw/Uveu3-EFHaI/AAAAAAAAAPU/Xnaa3Jrs9Nw/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_024.png)
-
 
 If step though the program and execute the RETN instruction, we see that we land 0x814 bytes into our buffer. This is equivalent to 2068 bytes in decimal format.
 
-
 [![](https://1.bp.blogspot.com/-4LepjI13y_s/UvevwAeP1mI/AAAAAAAAAPg/fofcphG76_M/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_025.png)](https://1.bp.blogspot.com/-4LepjI13y_s/UvevwAeP1mI/AAAAAAAAAPg/fofcphG76_M/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_025.png)
-
 
 Knowing this lets so some restructuring of our payload. We will have to subtract the 2068 bytes by 4 to get 2064, which is the number of bytes of junk we need before we insert the address that we want to use as our first ROP instruction:
 
@@ -260,31 +214,25 @@ handle.close()
 
 If we then execute this without any breakpoints, the program should execute our GGGG instruction (sorry I lost the screenshot for this apparently, but you should see GGGG in EIP, if not, double check your work. If you still can't get it, feel free to contact me)
 
-
 Ok, so this is all good. Now what we need to do is form a ROP chain. Remember mona.py from earlier? Well your going to love him right about now :)
-
 
 ### ROP'ing to Success with mona.py
 
 At this point what we could do is create our own ROP chain using any of the techniques from Corelan's tutorial over at [https://www.corelan.be/index.php/2010/06/16/exploit-writing-tutorial-part-10-chaining-dep-with-rop-the-rubikstm-cube/](https://www.corelan.be/index.php/2010/06/16/exploit-writing-tutorial-part-10-chaining-dep-with-rop-the-rubikstm-cube/) however we have a much simpler tool: mona.py!
 
-To find ROP chains that we can use, all we need to do is do:
-
-> !mona rop
+To find ROP chains that we can use, all we need to do is `!mona rop`.
 
 At this point the sky opens up and ROP chains of awesomeness open up to us. Or in other words, we basically get free generated ROP chains that we can use. And who doesn't like a bit of automation every once in a while?
 
-Once your PC unfreezes and mona finishes running, open the rop\_chains.txt file (there will be several generated) which is located at:
+Once your PC unfreezes and mona finishes running, open the rop_chains.txt file (there will be several generated) which is located at:
 
 ```
-C:\Users\*your username here*\AppData\Local\VirtualStore\Program Files\Immunity Inc\Immunity Debugger\rop\_chains.txt
+C:\Users\*your username here*\AppData\Local\VirtualStore\Program Files\Immunity Inc\Immunity Debugger\rop_chains.txt
 ```
 
 What you want to now do is scroll down to the bottom where it shows ROP chains using the VirualAlloc() mechanism. It should look something like this:
 
-
 [![](https://1.bp.blogspot.com/-CUSHA25cfJs/Uve1_cUJr0I/AAAAAAAAAPw/X6gBSw7Eio4/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_028.png)](https://1.bp.blogspot.com/-CUSHA25cfJs/Uve1_cUJr0I/AAAAAAAAAPw/X6gBSw7Eio4/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_028.png)
-
 
 At this point all we need to do is copy it across and incorporate it into our exploit, then fiddle around to make sure we get it to allocate our shellcode. With some shuffling around and organization of the length calculations, our new exploit code looks like this:
 
@@ -332,15 +280,11 @@ handle.close()
 
 Run this new code and run the program with the new file. Set a breakpoint on the SEH handler, and step through the code with the F8 button whilst watching the stack. Eventually you should see the call to VirtualAlloc and its parameters on the stack. This should look something like the following:
 
-
 [![](https://4.bp.blogspot.com/-zd1Bj-Tlvik/Uve4j9qsXgI/AAAAAAAAAP8/x-qy5nNTYM4/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_029.png)](https://4.bp.blogspot.com/-zd1Bj-Tlvik/Uve4j9qsXgI/AAAAAAAAAP8/x-qy5nNTYM4/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_029.png)
-
 
 If we look at the parameters to the VirtualAlloc call, we can see that the address pushed to the call is 0x0012D50C. We need to find out how far this is from the beginning of our buffer so that we can position the shellcode in the appropriate location.
 
-
 [![](https://1.bp.blogspot.com/-2Q5pCvt_InE/Uve7NY8RnwI/AAAAAAAAAQI/8xlCHrJSeYw/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_030.png)](https://1.bp.blogspot.com/-2Q5pCvt_InE/Uve7NY8RnwI/AAAAAAAAAQI/8xlCHrJSeYw/s0/Windows+7+-+VMware+Player+(Non-commercial+use+only)_030.png)
-
 
 We see that it is 0x854 or 2132 bytes till the allocation so we will need 2128 junk bytes before our shellcode for this to work correctly.
 
