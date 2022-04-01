@@ -2,12 +2,13 @@
 _site
 .sass-cache
 .vagrant
+.gitignore
 
 # general
 .DS_Store
 Thumbs.db
 ehthumbs.db
-
+.vscode/*
 Gemfile.lock
 
 beautiful-jekyll-theme-*.gem
