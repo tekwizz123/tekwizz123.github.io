@@ -136,7 +136,7 @@ _main endp
 Looks like our number got truncated again, but unlike last time no attempt was made to actually try to save the upper 32 bits of the number specified as the return address anywhere. The compiler instead decided to optimize things and just drop the upper 32 bits entirely, thereby only utilizing the lower 32 bits, aka `0x22223344`, in its operations.
 
 Finally, lets try Visual Studio 2017 Community. Upon compilation of the first example we get the following warning:
-```c++
+```
 c:\users\*redacted*\consoleapplication2\consoleapplication2.cpp(10): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
 ```
 
