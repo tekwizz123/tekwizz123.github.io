@@ -9,6 +9,7 @@ tags: [Recon, winget, Patching]
 ---
 
 # Introduction
+WinGet is a great tool for XXX.
 
 # Enumerating Patch Versions
 
