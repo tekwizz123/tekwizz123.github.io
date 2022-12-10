@@ -88,7 +88,7 @@ God time moves fast. I pm rAWjAW. I ask him how big the file size needs to be. H
 
 Ok np. Lets compress this baby.....or not? I find it only goes down 1 MB after I attempt to compress it.
 
-\* One hasty convo with connection later....\*
+\* One hasty conversation with connection later....\*
 
 I find out I really aught to do it in PDF. But PDF is 16 MB....meh I'll try the other method.
 
